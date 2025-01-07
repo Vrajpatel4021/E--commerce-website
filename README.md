@@ -1,7 +1,7 @@
 # E--commerce-website
 
 ****
-## Milestone 1 -
+## Milestone 1: Project Overview-
 
 In this milestone, we demonstrated the working of MERN Stack. And by using the MERN stack we are going to bulid an e-commerce website
 
