@@ -34,3 +34,21 @@ Which is,
    - Integrates a secure payment system.
    - Handles transactions seamlessly.
 ****
+
+## Milestone 2: Project Overview - 
+
+In this milestone we learned how to setup a development enviroment for a backend project and also started with making Basic UI for Login page.-
+
+Key Learnings - 
+
+- Learned tailwind css for login page UI
+- Learned to setup basic tools used in backend like -
+  -  express
+  -  mongoose
+  -  dotenv
+  -  nodemon
+  -  cookie-parser
+  -  nodemailer etc...
+- And learned Basic react Routing.
+
+****
