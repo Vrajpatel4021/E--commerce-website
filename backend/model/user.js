@@ -80,7 +80,7 @@ const userSchema = new mongoose.Schema({
 //Hash password
 
 userSchema.pre("save",async function(next){
-    if(!this.isModified()){
+    if(!this.isModified("password")){
         next();
     }
 
