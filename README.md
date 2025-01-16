@@ -94,4 +94,4 @@ Key Learnings -
 Key Learnings -
 
 - We learned how to encrytp the password and store it in the database (Hashing) , Using the Bcrypt package.
-- We also learned how to store database of new users in the database.
+- We also learned how to store data of new users inside the database.
