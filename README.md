@@ -34,3 +34,56 @@ Which is,
    - Integrates a secure payment system.
    - Handles transactions seamlessly.
 ****
+
+
+
+## Milestone 2: Project Overview - 
+
+In this milestone we learned how to setup a development enviroment for a backend project and also started with making Basic UI for Login page.-
+
+Key Learnings - 
+
+- Learned tailwind css for login page UI
+- Learned to setup basic tools used in backend like -
+  -  express
+  -  mongoose
+  -  dotenv
+  -  nodemon
+  -  cookie-parser
+  -  nodemailer etc...
+- And learned Basic react Routing.
+
+****
+
+
+## Milestone 3: Project Overview - 
+
+In this milestone we have learned how to setup basic backend configurations - 
+
+Key learnings -
+
+- Learned how to use express js.
+- Learned how to use the mongodb database and connect it with our server code.
+- Learned to use jsonWebTokens for authentications.
+- And finally learned to effectively handle the errors.
+
+
+## Milestone 4: Project Overview -
+
+In this milestone we learned the following things -
+
+Key learnings - 
+
+- We learned how to use mongoose schema
+- We learned how to install and use multer
+- We learned password hashing using bcrypt
+- And lastly we learned about usage of jsonWebTokens for authentication.
+
+## Milestone 5: Project Overview - 
+
+In this milestone we focused on creating a signup page for new users visiting the website,
+
+Key Learnings - 
+
+- We Learned how to create the UI for the Signup page using React and Tailwind CSS.
+- We also learned how to use RegEx (Regular expressions) for the validation of the inputs on the signup page.
