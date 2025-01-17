@@ -58,7 +58,7 @@ const Signup = () => {
 
 
 //axios request
-    axios.post("http://10.1.77.124:8000/api/v2/user/create-user", newForm, config).then((res)=>{
+    axios.post("http://localhost:8000/api/v2/user/create-user", newForm, config).then((res)=>{
       console.log(res.data);
     }).catch((err)=>{
       console.log(err);
@@ -205,7 +205,7 @@ const Signup = () => {
 
             <div className="flex items-center w-full">
               <h4>Already have an account?</h4>
-              <Link to="/" className="text-blue-600 pl-2">
+              <Link to="/login" className="text-blue-600 pl-2">
                 Sign In
               </Link>
             </div>
