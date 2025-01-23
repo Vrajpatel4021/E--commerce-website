@@ -95,3 +95,14 @@ Key Learnings -
 
 - We learned how to encrytp the password and store it in the database (Hashing) , Using the Bcrypt package.
 - We also learned how to store data of new users inside the database.
+
+
+## Milestone 7: Project Overview - 
+
+In this milestone we simply implemented the logic for login and signup , that is if the user already exists in the database then only he/she will be able to login.
+
+
+## Milestone 8: Project Overview - 
+
+In this milestone we simply created the frontend part for the HomePage of our Website , And also learned how to route it.
+
