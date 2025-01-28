@@ -89,7 +89,7 @@ const CreateProduct = () => {
                         <select className='w-full p-2 border rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-400 hover:shadow-lg transition-shadow duration-200' value={category} onChange={(e) => setCatogery(e.target.value)} required>
                             <option value="">Choose a Categroy</option>
                             {categoriesData.map((i) => (
-                                <option value={i.title} ley={i.title}>
+                                <option value={i.title} key={i.title}>
                                     {i.title}
                                 </option>
                             ))}
