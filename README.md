@@ -106,3 +106,21 @@ In this milestone we simply implemented the logic for login and signup , that is
 
 In this milestone we simply created the frontend part for the HomePage of our Website , And also learned how to route it.
 
+## Milestone 9: Project Overview -
+
+In this milestone we have simply created a form named create product to add products to our website. We created it using React.js and tailwind css.
+
+The Key features of the form are - Name of product , its description , price , etc... and also a file upload feature to upload the pictures of the product.
+
+## Milestone 10: Project Overview -
+
+In this milestone we learned how to setup the backend for the createproduct page that we created in milestone9.
+
+
+## Milestone 11: Project Overview - 
+
+In this milestone we created an api endpoint which will extract data from createproduct page and then will display the product on the home page.
+
+## Milestone 12: Project Overview - 
+
+In this milestone, we created an API endpoint to filter data by email from MongoDB and dynamically display it on the home page using the previously created product card.
