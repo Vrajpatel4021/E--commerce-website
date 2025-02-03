@@ -55,7 +55,7 @@ router.post(
 );
 
 
-router.post('/',catchAsyncErrors(async(req,res,nex)=>{
+router.post('/login',catchAsyncErrors(async(req,res,nex)=>{
     console.log('Creating User...')
     const {email,password} = req.body
 

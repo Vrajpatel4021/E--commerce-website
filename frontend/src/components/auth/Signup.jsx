@@ -205,7 +205,7 @@ const Signup = () => {
 
             <div className="flex items-center w-full">
               <h4>Already have an account?</h4>
-              <Link to="/" className="text-blue-600 pl-2">
+              <Link to="/login" className="text-blue-600 pl-2">
                 Sign In
               </Link>
             </div>
