@@ -10,7 +10,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/home' element = {<Home/>}/>
-        <Route path='/product' element = {<CreateProduct/>}/>
+        <Route path='/create-product' element = {<CreateProduct/>}/>
+        <Route path='/create-product/:id' element = {<CreateProduct/>}/>
         <Route path='/my-products' element = {<MyProducts/>}/>
       </Routes>
     </BrowserRouter>
