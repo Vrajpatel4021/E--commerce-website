@@ -172,25 +172,97 @@ router.put('/update-product/:id', pupload.array('images', 10), async (req, res) 
     }
 });
 
+router.delete('/delete-product/:id',async(req,res)=>{
+    const {id}=req.params;
 
+    try{
+        const existingProduct=await Product.findById(id);
+        if(!existingProduct){
+            return res.status(400).json({error:'Product not availabe so unable to delete'})
+        }
+        await existingProduct.deleteOne();
+        res.status(200).json({message:"Product Deleted Successfully!"})
+    }catch(err){
+        console.error(`Server error:${err}`)
+        res.status(500).json({message:"Server error so product not deleted!"})
+    }
 
-router.delete('/delete-product/:id', async (req, res) => {
-    const { id } = req.params;
+})
 
+router.post('/cart', async (req, res) => {
     try {
-        const existingProduct = await Product.findById(id);
-        if (!existingProduct) {
-            return res.status(404).json({ error: 'Product not found.' });
+        const { userId, productId, quantity } = req.body;
+        const email = userId;
+
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required' });
         }
 
-        await existingProduct.deleteOne();
-        res.status(200).json({ message: '✅ Product deleted successfully' });
-    } catch (err) {
-        console.error('Server error:', err);
-        res.status(500).json({ error: 'Server error. Could not delete product.' });
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).json({ message: 'Invalid productId' });
+        }
+
+        if (!quantity || quantity < 1) {
+            return res.status(400).json({ message: 'Quantity must be at least 1' });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        const cartItemIndex = user.cart.findIndex(
+            (item) => item.productId.toString() === productId
+        );
+
+        if (cartItemIndex > -1) {
+            user.cart[cartItemIndex].quantity += quantity;
+        } else {
+            user.cart.push({ productId, quantity });
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            message: 'Cart updated successfully',
+            cart: user.cart,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
     }
 });
 
+
+
+// GET cart details endpoint
+router.get('/cartproducts', async (req, res) => {
+    try {
+        const { email } = req.query;
+        if (!email) {
+            return res.status(400).json({ error: 'Email query parameter is required' });
+        }
+        const user = await User.findOne({ email }).populate({
+            path: 'cart.productId',
+            model: 'Product'
+        });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json({
+            message: 'Cart retrieved successfully',
+            cart: user.cart
+        });
+    } catch (err) {
+        console.error('Server error:', err);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
 
 module.exports = router;
