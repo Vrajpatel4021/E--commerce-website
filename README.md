@@ -169,3 +169,7 @@ Key learnings -
 
 - We have create an endpoint to receive request from cart page.
 - We have also create an backend endpoint to fetch all the products inside cart with user mail.
+
+## Milestone 19: Project Overview - 
+
+- In this milestone we learned how to create the **Add to cart** functionality to our e-commerce website.
