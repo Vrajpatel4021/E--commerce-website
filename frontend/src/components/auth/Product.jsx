@@ -1,6 +1,6 @@
-import PropTypes, { string } from "prop-types";
+import PropTypes from "prop-types";
 import {React,useState,useEffect} from 'react';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
 const Product = ({ _id,name, images, description, price }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate=useNavigate()
@@ -39,8 +39,9 @@ const Product = ({ _id,name, images, description, price }) => {
 };
 
 Product.propTypes = {
+  _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  images: PropTypes.string.isRequired,
+  images:PropTypes.arrayOf(PropTypes.string).isRequired,
   description: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
 };
