@@ -18,7 +18,7 @@ const NavBar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
           {[
-            { name: "Home", path: "/home" },
+            { name: "Home", path: "/" },
             { name: "My Products", path: "/my-products" },
             { name: "Add Products", path: "/create-product" },
             { name: "Cart", path: "/cart" },

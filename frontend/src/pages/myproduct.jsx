@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Myproduct from "../components/auth/myproduct";
 import NavBar from "../components/auth/nav"
@@ -50,4 +49,3 @@ export default function MyProducts() {
 </>
     );
 }
-
