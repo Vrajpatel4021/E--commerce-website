@@ -8,6 +8,7 @@ import ProductDetails from "./pages/productDetails";
 import Profile from "./pages/profile";
 import CreateAddress from "./pages/createAddress";
 import SelectAddress from "./pages/selectAddress";
+import OrderConfirmation from "./pages/OrderConfirmation";
 
 export { LoginPage };
 export{SignupPage};
@@ -18,3 +19,4 @@ export{ProductDetails};
 export{Profile};
 export{CreateAddress}
 export{SelectAddress}
+export{OrderConfirmation};
