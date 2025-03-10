@@ -189,4 +189,4 @@ In this milestone we completed the backend setup for the create Address page.
 
 ## Milestone 23: Project Overview -
 
-In this milestone wwe simply created the frontend for the select address page in our ecommerce website.
+In this milestone we simply created the frontend for the select address page in our ecommerce website.
