@@ -9,8 +9,9 @@ import Profile from "./pages/profile";
 import CreateAddress from "./pages/createAddress";
 import SelectAddress from "./pages/selectAddress";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import MyOrdersPage from "./pages/myorders";
 
-export { LoginPage };
+export{ LoginPage };
 export{SignupPage};
 export{Home};
 export{CreateProduct,Cart};
@@ -20,3 +21,4 @@ export{Profile};
 export{CreateAddress}
 export{SelectAddress}
 export{OrderConfirmation};
+export{MyOrdersPage};
