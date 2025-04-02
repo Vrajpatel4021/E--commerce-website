@@ -10,7 +10,7 @@ import CreateAddress from "./pages/createAddress";
 import SelectAddress from "./pages/selectAddress";
 import OrderConfirmation from "./pages/OrderConfirmation";
 
-export { LoginPage };
+export{ LoginPage };
 export{SignupPage};
 export{Home};
 export{CreateProduct,Cart};
