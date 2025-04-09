@@ -169,3 +169,62 @@ Key learnings -
 
 - We have create an endpoint to receive request from cart page.
 - We have also create an backend endpoint to fetch all the products inside cart with user mail.
+
+## Milestone 19: Project Overview - 
+
+- In this milestone we learned how to create the **Add to cart** functionality to our e-commerce website.
+
+## Milestone 20: Project Overview - 
+
+In this milestone we created a profile page that shows the personal details of the user such as Name , email ect.....
+
+## Milestone 21: Project Overview - 
+
+In this milestone we created a create address page to add user address to the profile page . 
+
+## Milestone 22: Project Overview -
+
+In this milestone we completed the backend setup for the create Address page.
+
+
+## Milestone 23: Project Overview -
+
+In this milestone we simply created the frontend for the select address page in our ecommerce website.
+
+## Milestone 24: Project Overview -
+
+In this milestone we created the frontend for the orderComfinmation page in our E - commerce website.
+
+## Milestone 25: Project Overview -
+
+In this milestone we configured the backend for the place order page.
+
+## Milestone 26: Project Overview -
+
+In this milestone we have created the endpoint for the my-orders page.
+
+## Milestone 27: Project Overview -
+
+In this milestone we have created the frontend part for the myOrders page.
+
+## Milestone 28: Project Overview -
+
+In this milestone we have configured the backend for the myOrders page.
+
+## Milestone 29: Project Overview - 
+
+In this milestone we learned the following things -
+
+Key learnings -
+
+- Learn how to use PayPal API.
+- Learn how to Integrate online payments.
+
+## Milestone 30: Project Overview - 
+
+In this milestone we learned the following things - 
+
+Key learning - 
+
+- How to use redux for global state management
+- Implement redux store to store all global states
