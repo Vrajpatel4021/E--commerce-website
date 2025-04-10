@@ -2,6 +2,10 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
+import { useDispatch } from 'react-redux';
+import { setemail } from "../../store/userAction";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,22 +13,33 @@ const Login = () => {
   const [error,setError] = useState("")
 
 
-  const handleSubmit = async(e)=>{
-    e.preventDefault();
-    try{
-      const response = await axios.post("http://localhost:8000/api/v2/user",{email,password});
+  const navigate = useNavigate();
 
-      console.log(response.data)
 
-    }
-    catch(error){
 
-      setError("Invalid Credentials!")
-      console.error("Login Error",error)
-    
-    }
+
+  const dispatch = useDispatch();//add this line
+
+
+
+// Handle form submission
+const handleSubmit = async (e) => {
+  e.preventDefault(); // Prevent the default form submit behavior
+  try {
+    // Make the POST request to the backend (replace with your actual API endpoint)
+    const response = await axios.post("http://localhost:8000/api/v2/user/login", { email, password });
+
+    dispatch(setemail(email));//add this line
+    // Assuming response contains a token or user data on successful login
+    navigate("/")
+    console.log(response.data);
+    // Redirect or take some action upon successful login here
+  } catch (error) {
+    // Handle errors (e.g., invalid credentials)
+    setError("There was an error logging in. Please check your credentials.");
+    console.error("There was an error logging in!", error);
   }
-
+};
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
