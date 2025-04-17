@@ -7,6 +7,9 @@ import { setemail } from "../../store/userAction";
 import { useNavigate } from "react-router-dom";
 
 
+// Ensure axios sends cookies with requests
+axios.defaults.withCredentials = true;
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +21,7 @@ const Login = () => {
 
 
 
-  const dispatch = useDispatch();//add this line
+  const dispatch = useDispatch();
 
 
 
