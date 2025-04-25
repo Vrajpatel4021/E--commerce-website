@@ -6,6 +6,12 @@ process.on("uncaughtException", (err) => {
     console.log(`Error: ${err.message}`);
     console.log(`shutting down the server for handling uncaught exception`);
   });
+
+ const cors = require("cors");
+  app.use(cors({
+    origin: ['http://localhost:3000', 'https://your-frontend.onrender.com'],
+    credentials: true
+  }));
   
 
 // config
