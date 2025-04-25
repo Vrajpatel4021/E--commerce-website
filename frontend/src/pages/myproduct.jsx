@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import  Myproduct from "../components/auth/myProduct";   //change in this line
+import  Myproduct from "../components/auth/myproduct";   //change in this line
 import Nav from '../components/auth/nav'
 import axios from "../axiosConfig";
 import { useSelector } from 'react-redux'; // Import useSelector
