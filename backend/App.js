@@ -54,12 +54,12 @@ app.use(ErrorHandler);
 
 
 
-// Serve frontend
-app.use(express.static(path.join(__dirname, "../frontend/dist"))); // Adjust path if client is outside backend
+// // Serve frontend
+// app.use(express.static(path.join(__dirname, "../frontend/dist"))); // Adjust path if client is outside backend
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+// });
 
 
 
