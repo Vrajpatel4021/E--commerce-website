@@ -8,11 +8,11 @@ process.on("uncaughtException", (err) => {
   });
   
 
-  const cors = require("cors");
-  app.use(cors({
-    origin: ['http://localhost:5173', 'https://ecommerce-vrajpatel-s73.netlify.app'],
-    credentials: true
-  }));
+  // const cors = require("cors");
+  // app.use(cors({
+  //   origin: ['http://localhost:5173', ''],
+  //   credentials: true
+  // }));
 
 // config
 if (process.env.NODE_ENV !== "PRODUCTION") {
