@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from '../axiosConfig';
 import Nav from "../components/auth/nav";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -216,7 +216,7 @@ const OrderConfirmation = () => {
                 <div className="mt-4" style={{ maxWidth: "500px" }}>
                   <PayPalScriptProvider
                     options={{
-                      "client-id": "ATpZAJG7iWnyNgMJHyq6qS3uW97zAfwYACaXgtEOg4x7YbxXG8XHV8AKaJyyYVL9-Lb4rAgVFZ-aahoD",
+                      "client-id": "AaKL1vZqsVTYSxBUpCXr0qjgiyErrkNKwdW30Gdz9UZGS64lwJ6dDtVU6Ic6i5hcIv_YVNIjO7FZu5dV",
                     }}
                   >
                     <PayPalButtons
@@ -296,4 +296,4 @@ const OrderConfirmation = () => {
   );
 };
 
-export default OrderConfirmation;
+export default OrderConfirmation; 

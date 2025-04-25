@@ -1,14 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import axios from 'axios';
+import axios from "../axiosConfig";
 import { useParams, useNavigate } from "react-router-dom";
 import Nav from '../components/auth/nav'
 const CreateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEdit = Boolean(id);
-
-  const btnName= isEdit ? "Update":"Createe"
 
   const [images, setImages] = useState([]);
   const [name, setName] = useState("");
@@ -268,7 +266,7 @@ const handleSubmit = async (e) => {
           type="submit"
           className="w-full mt-6 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition-colors duration-200"
         >
-          {btnName}
+          Create
         </button>
       </form>
     </div>

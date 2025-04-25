@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/auth/nav";
-
+import axios from "../axiosConfig";
 import { useSelector } from 'react-redux'; // Import useSelector
-
-
-
-
 
 const CreateAddress = () => {
     const navigate = useNavigate();
@@ -18,8 +13,9 @@ const CreateAddress = () => {
     const [address2, setAddress2] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [addressType, setAddressType] = useState("");
-    // Retrieve email from Redux state
-    const email= useSelector((state) => state.user.email);
+    // Get the email from Redux state
+    const email = useSelector((state) => state.user.email);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();

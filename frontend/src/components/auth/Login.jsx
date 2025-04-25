@@ -1,48 +1,42 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
-
+import { Link } from 'react-router-dom';
+import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setemail } from "../../store/userAction";
-import { useNavigate } from "react-router-dom";
-
+import {useNavigate} from 'react-router-dom'
 
 // Ensure axios sends cookies with requests
 axios.defaults.withCredentials = true;
 
 const Login = () => {
+  // State to hold email and password values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error,setError] = useState("")
-
-
-  const navigate = useNavigate();
-
-
-
+  const [error, setError] = useState(""); // For handling error messages
+  const navigate=useNavigate();
 
   const dispatch = useDispatch();
 
 
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submit behavior
+    try {
+      // Make the POST request to the backend (replace with your actual API endpoint)
+      const response = await axios.post("http://localhost:8000/api/v2/user/login", { email, password });
 
-// Handle form submission
-const handleSubmit = async (e) => {
-  e.preventDefault(); // Prevent the default form submit behavior
-  try {
-    // Make the POST request to the backend (replace with your actual API endpoint)
-    const response = await axios.post("http://localhost:8000/api/v2/user/login", { email, password });
+      dispatch(setemail(email));
+      // Assuming response contains a token or user data on successful login
+      console.log(response.data);
+      // Redirect or take some action upon successful login here
+      navigate("/")
+    } catch (error) {
+      // Handle errors (e.g., invalid credentials)
 
-    dispatch(setemail(email));//add this line
-    // Assuming response contains a token or user data on successful login
-    navigate("/")
-    console.log(response.data);
-    // Redirect or take some action upon successful login here
-  } catch (error) {
-    // Handle errors (e.g., invalid credentials)
-    setError("There was an error logging in. Please check your credentials.");
-    console.error("There was an error logging in!", error);
-  }
-};
+      setError("There was an error logging in. Please check your credentials.");
+      console.error("There was an error logging in!", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -53,7 +47,7 @@ const handleSubmit = async (e) => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6">
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
                     <div className="mt-1">
@@ -81,19 +75,17 @@ const handleSubmit = async (e) => {
                     </div>
                 </div>
                 <div>
-                    <button type="submit" className="relative w-full h-6 flex justify-center items-center  py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                    {/* onClick for Submit Button */}
+                    <button type="button" onClick={handleSubmit} className="relative w-full h-10 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" >
                         Submit
                     </button>
                 </div>
-                <p className="text-center">
-                  Do not have accout? <Link to ={'/signup'} className="text-blue-600">Signup</Link>
-                </p>
+                {error && <p className="text-center text-red-900">{error}</p>} {/* Display error message if there is one */}
+                <p className="text-center text-red-900">Donot have an account? <Link to={'/signup'} className="text-blue-600">Sign up</Link></p>
             </form>
         </div>
       </div>
-      
     </div>
-
   );
 };
 
