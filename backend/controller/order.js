@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../model/order'); // Adjust path as needed
-const User = require('../model/User');   // Adjust path as needed
+const User = require('../model/user');   // Adjust path as needed
+const { isAuthenticatedUser } = require('../middleware/auth');
 
-router.post('/place-order', async (req, res) => {
+router.post('/place-order',isAuthenticatedUser,async (req, res) => {
     try {
         const { email, orderItems, shippingAddress } = req.body;
 
@@ -49,8 +50,7 @@ router.post('/place-order', async (req, res) => {
 });
 
 
-
-router.get('/myorders', async (req, res) => {
+router.get('/myorders',isAuthenticatedUser,async (req, res) => {
     try {
         // Retrieve email from query parameters
         const { email } = req.query;
@@ -73,32 +73,7 @@ router.get('/myorders', async (req, res) => {
     }
 });
 
-
-
-router.get('/myorders', async (req, res) => {
-    try {
-        // Retrieve email from query parameters
-        const { email } = req.query;
-        if (!email) {
-            return res.status(400).json({ message: 'Email is required.' });
-        }
-
-        // Find user by email
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
-
-        // Retrieve orders for the user
-        const orders = await Order.find({ user: user._id });
-        res.status(200).json({ orders });
-    } catch (error) {
-        console.error('Error fetching orders:', error);
-        res.status(500).json({ message: error.message });
-    }
-});
-
-router.patch('/cancel-order/:orderId', async (req, res) => {
+router.patch('/cancel-order/:orderId',isAuthenticatedUser, async (req, res) => {
     try {
         const { orderId } = req.params;
         console.log("fff")
@@ -120,6 +95,31 @@ router.patch('/cancel-order/:orderId', async (req, res) => {
     }
 });
 
+router.get('/my-orders', isAuthenticatedUser, async (req, res) => {
+    try {
+        const { email } = req.query;
+
+        // Validate the email parameter
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required.' });
+        }
+
+        // Retrieve user _id from the user collection using the provided email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        // Find all orders associated with the user
+        const orders = await Order.find({ user: user._id });
+
+        res.status(200).json({ orders });
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 
-module.exports=router;
+
+module.exports = router;
