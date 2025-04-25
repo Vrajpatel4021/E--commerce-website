@@ -10,7 +10,7 @@ process.on("uncaughtException", (err) => {
 
   const cors = require("cors");
   app.use(cors({
-    origin: ['http://localhost:5173', ''],
+    origin: ['http://localhost:5173', 'https://ecommerce-vrajpatel-s73.netlify.app'],
     credentials: true
   }));
 
