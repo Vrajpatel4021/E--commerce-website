@@ -3,7 +3,7 @@ const app = express();
 const ErrorHandler = require("./middleware/error");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const cors=require('cors')
+
 const path=require('path')
 
 
@@ -12,7 +12,22 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
 app.use("/",express.static("uploads"));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use(cors({ origin: ['http://localhost:5173','https://ecommerce-vrajpatel-s73.netlify.app' ], credentials: true }));
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://ecommerce-vrajpatel-s73.netlify.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 // config
 if (process.env.NODE_ENV !== "PRODUCTION") {
     require("dotenv").config({
