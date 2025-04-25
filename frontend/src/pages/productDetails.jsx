@@ -21,7 +21,7 @@ const ProductDetails = () => {
 		const fetchProduct = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:8000/api/v2/product/product/${id}`
+					`/api/v2/product/product/${id}`
 				);
 				console.log("Fetched product:", response.data.product);
 				setProduct(response.data.product); // Ensure correct state setting
@@ -56,7 +56,7 @@ const ProductDetails = () => {
 
 	const addtocart = async () => {
 		try {
-			const response = await axios.post("http://localhost:8000/api/v2/product/cart",
+			const response = await axios.post("/api/v2/product/cart",
 				{
 					userId: email,
 					productId: id,
@@ -101,7 +101,7 @@ const ProductDetails = () => {
         <div className="md:w-1/2 p-4">
           {product.images?.length ? (
               <img
-              src={`http://localhost:8000${product.images[0]}`}
+              src={`${axios.defaults.baseURL}${product.images[0]}`}
               alt={product.name}
               className="w-full h-96 object-contain rounded-md"
               />

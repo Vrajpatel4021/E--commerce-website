@@ -27,10 +27,10 @@ const OrderConfirmation = () => {
     const fetchData = async () => {
       try {
         const [addressResponse, cartResponse] = await Promise.all([
-          axios.get("http://localhost:8000/api/v2/user/addresses", {
+          axios.get("/api/v2/user/addresses", {
             params: { email },
           }),
-          axios.get("http://localhost:8000/api/v2/product/cartproducts", {
+          axios.get("/api/v2/product/cartproducts", {
             params: { email },
           }),
         ]);
@@ -45,7 +45,7 @@ const OrderConfirmation = () => {
           name: item.productId.name,
           price: item.productId.price,
           images: item.productId.images.map(
-            (imagePath) => `http://localhost:8000${imagePath}`
+            (imagePath) => `${axios.defaults.baseURL}${imagePath}`
           ),
           quantity: item.quantity,
         }));
@@ -103,7 +103,7 @@ const OrderConfirmation = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:8000/api/v2/orders/place-order",
+        "/api/v2/orders/place-order",
         payload
       );
       setOrderDetails(response.data.orders);

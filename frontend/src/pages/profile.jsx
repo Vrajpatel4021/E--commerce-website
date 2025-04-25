@@ -19,7 +19,7 @@ export default function Profile() {
 	useEffect(() => {
 		if (!userEmail) return;
 
-		axios.get(`http://localhost:8000/api/v2/user/profile?email=${userEmail}`)
+		axios.get(`/api/v2/user/profile?email=${userEmail}`)
 			.then((res) => {
 				// assuming API sends { user: {name, email, phoneNumber, avatarUrl}, addresses: [...] }
 				const { user, addresses } = res.data;
@@ -60,7 +60,7 @@ export default function Profile() {
 								<div className="w-full h-max text-2xl text-neutral-100 text-left">PICTURE</div>
 								<img
 									src={personalDetails.avatarUrl 
-										? `http://localhost:8000/${personalDetails.avatarUrl}`
+										? `${axios.defaults.baseURL}/${personalDetails.avatarUrl}`
 										: `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`}
 									alt="profile"
 									className="w-40 h-40 rounded-full"
