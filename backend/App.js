@@ -51,4 +51,17 @@ app.use("/api/v2/orders", orders);
 // it's for ErrorHandling
 app.use(ErrorHandler);
 
+
+const path = require("path");
+
+// Serve frontend
+app.use(express.static(path.join(__dirname, "../client/build"))); // Adjust path if client is outside backend
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
+
+
+
 module.exports = app;
