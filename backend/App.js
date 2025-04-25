@@ -52,7 +52,7 @@ app.use("/api/v2/orders", orders);
 app.use(ErrorHandler);
 
 
-const path = require("path");
+
 
 // Serve frontend
 app.use(express.static(path.join(__dirname, "../client/build"))); // Adjust path if client is outside backend
