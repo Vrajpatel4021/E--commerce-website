@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import {React,useState,useEffect} from 'react';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 const Product = ({ _id,name, images, description, price }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     if (!images || images.length === 0) return;
     const interval = setInterval(() => {
@@ -28,8 +28,8 @@ const Product = ({ _id,name, images, description, price }) => {
       </div>
       <div className="w-full text-center">
         <p className="text-lg font-bold text-gray-900 mb-4">${price.toFixed(2)}</p>
-        <button className="text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-full transition-all"
-        onClick={()=>navigate(`/product/${_id}`)}
+        <button className="text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-full transition-all" 
+         onClick={() => navigate(`/product/${_id}`)}
         >
           More Info
         </button>
@@ -41,7 +41,7 @@ const Product = ({ _id,name, images, description, price }) => {
 Product.propTypes = {
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  images:PropTypes.arrayOf(PropTypes.string).isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
   description: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
 };

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios from '../axiosConfig';
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
 import { Loader, AlertCircle } from "lucide-react";
 import Nav from '../components/auth/nav'
 
 import { useSelector } from 'react-redux'; // Import useSelector
-
-
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -15,50 +13,62 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  // Retrieve email from Redux state
+  // Get the email from Redux state
   const email = useSelector((state) => state.user.email);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/api/v2/product/product/${id}`
-        );
-        setProduct(response.data.product);
-        setLoading(false);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    };
-    fetchProduct();
-  }, [id]);
 
   useEffect(() => {
-    if (product !== null) {
-        console.log("Updated product state:", product);
-        console.log("Product name:", product.name);
-    }
-}, [product]);
+		const fetchProduct = async () => {
+			try {
+				const response = await axios.get(
+					`http://localhost:8000/api/v2/product/product/${id}`
+				);
+				console.log("Fetched product:", response.data.product);
+				setProduct(response.data.product); // Ensure correct state setting
+				setLoading(false);
+			} catch (err) {
+				console.error("Error fetching product:", err);
+				setError(err);
+				setLoading(false);
+			}
+		};
 
-  const handleIncrement = () => setQuantity((prev) => prev + 1);
-  const handleDecrement = () => setQuantity((prev) => (prev >= 1 ? prev - 1 : 1));
+		fetchProduct();
+	}, [id]);
 
-  const addtocart = async () => {
-    try {
-        const response = await axios.post(
-            "http://localhost:8000/api/v2/product/cart",
-            {
-                userId: email,
-                productId: id,
-                quantity: quantity,
-            }
-        );
-        console.log("Added to cart:", response.data);
-    } catch (err) {
-        console.error("Error adding to cart:", err);
-    }
-};
+	// Log the updated product state whenever it changes
+	useEffect(() => {
+		if (product !== null) {
+			console.log("Updated product state:", product);
+			console.log("Product name:", product.name);
+		}
+	}, [product]);
+
+	// 2. Handler to increment quantity
+	const handleIncrement = () => {
+		setQuantity((prevQuantity) => prevQuantity + 1);
+	};
+
+	// 3. Handler to decrement quantity, ensuring it doesn't go below 1
+	const handleDecrement = () => {
+		setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+	};
+
+	const addtocart = async () => {
+		try {
+			const response = await axios.post("http://localhost:8000/api/v2/product/cart",
+				{
+					userId: email,
+					productId: id,
+					quantity: quantity,
+				}
+			);
+			console.log("Added to cart:", response.data);
+		} catch (err) {
+			console.error("Error adding to cart:", err);
+		}
+	};
+  
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -107,7 +117,7 @@ const ProductDetails = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h1>
           <p className="text-gray-600 mb-3">{product.description}</p>
           <span className="text-lg font-semibold text-gray-700">Category: {product.category}</span>
-
+         
           {/* Price & Quantity */}
           {product.tags && product.tags.length > 0 && (
               <div>
@@ -138,7 +148,7 @@ const ProductDetails = () => {
               </button>
             </div>
           </div>
-
+          
           {/* Action Buttons */}
           <button className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-transform transform hover:-translate-y-1"
           onClick={addtocart}

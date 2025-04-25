@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import AddressCard from "../components/auth/AddressCard";
 import Nav from "../components/auth/nav";
 import { useNavigate } from "react-router-dom";
-
-import { useSelector } from 'react-redux'; // Import useSelector
-
+import axios from "../axiosConfig";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
 	const [personalDetails, setPersonalDetails] = useState({
@@ -13,39 +12,39 @@ export default function Profile() {
 		phoneNumber: "",
 		avatarUrl: "",
 	});
-	// Retrieve email from Redux state
+	const [addresses, setAddresses] = useState([]);
+	const navigate = useNavigate();
 	const userEmail = useSelector((state) => state.user.email);
 
-	const navigate = useNavigate();
-	const [addresses, setAddresses] = useState([]);
-
 	useEffect(() => {
-		fetch(
-			`http://localhost:8000/api/v2/user/profile?email=${userEmail}`,
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		)
+		if (!userEmail) return;
+
+		axios.get(`http://localhost:8000/api/v2/user/profile?email=${userEmail}`)
 			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! status: ${res.status}`);
+				// assuming API sends { user: {name, email, phoneNumber, avatarUrl}, addresses: [...] }
+				const { user, addresses } = res.data;
+
+				if (user) {
+					setPersonalDetails({
+						name: user.name || "",
+						email: user.email || "",
+						phoneNumber: user.phoneNumber || "",
+						avatarUrl: user.avatarUrl || "",
+					});
 				}
-				return res.json();
+
+				if (addresses) {
+					setAddresses(addresses);
+				}
 			})
-			.then((data) => {
-				setPersonalDetails(data.user);
-				setAddresses(data.addresses);
-				console.log("User fetched:", data.user);
-				console.log("Addresses fetched:", data.addresses);
+			.catch((err) => {
+				console.error("Error fetching profile:", err);
 			});
-	}, []);
+	}, [userEmail]);
 
 	const handleAddAddress = () => {
-        navigate("/create-address");
-    };
+		navigate("/create-address");
+	};
 
 	return (
 		<>
@@ -54,49 +53,39 @@ export default function Profile() {
 				<div className="w-full h-full bg-neutral-700 rounded-lg">
 					<div className="w-full h-max my-2 p-5">
 						<div className="w-full h-max">
-							<h1 className="text-3xl text-neutral-100">
-								Personal Details
-							</h1>
+							<h1 className="text-3xl text-neutral-100">Personal Details</h1>
 						</div>
 						<div className="w-full h-max flex flex-col sm:flex-row p-5 gap-10">
 							<div className="w-40 h-max flex flex-col justify-center items-center gap-y-3">
-								<div className="w-full h-max text-2xl text-neutral-100 text-left">
-									PICTURE
-								</div>
+								<div className="w-full h-max text-2xl text-neutral-100 text-left">PICTURE</div>
 								<img
-        src={personalDetails.avatarUrl ? `http://localhost:8000/${personalDetails.avatarUrl}` : `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`}
-        alt="profile"
-        className="w-40 h-40 rounded-full"                   
-        onError={(e) => {
-            e.target.onerror = null; // Prevents infinite loop if the default image also fails
-            e.target.src = `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`;
-			console.log("Avatar URL:", personalDetails.avatarUrl);
-
-        }}
-    />
+									src={personalDetails.avatarUrl 
+										? `http://localhost:8000/${personalDetails.avatarUrl}`
+										: `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`}
+									alt="profile"
+									className="w-40 h-40 rounded-full"
+									onError={(e) => {
+										e.target.onerror = null;
+										e.target.src = `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`;
+									}}
+								/>
 							</div>
 							<div className="h-max md:flex-grow">
 								<div className="w-full h-max flex flex-col justify-center items-center gap-y-3">
 									<div className="w-full h-max">
-										<div className="text-2xl text-neutral-100 text-left">
-											NAME
-										</div>
+										<div className="text-2xl text-neutral-100 text-left">NAME</div>
 										<div className="text-lg font-light text-neutral-100 text-left break-all">
 											{personalDetails.name}
 										</div>
 									</div>
 									<div className="w-full h-max">
-										<div className="text-2xl text-neutral-100 text-left">
-											EMAIL
-										</div>
+										<div className="text-2xl text-neutral-100 text-left">EMAIL</div>
 										<div className="text-lg font-light text-neutral-100 text-left break-all">
 											{personalDetails.email}
 										</div>
 									</div>
 									<div className="w-full h-max">
-										<div className="text-2xl text-neutral-100 text-left">
-											MOBILE
-										</div>
+										<div className="text-2xl text-neutral-100 text-left">MOBILE</div>
 										<div className="text-lg font-light text-neutral-100 text-left break-all">
 											{personalDetails.phoneNumber}
 										</div>
@@ -105,14 +94,16 @@ export default function Profile() {
 							</div>
 						</div>
 					</div>
+
 					<div className="w-full h-max my-2 p-5">
 						<div className="w-full h-max">
-							<h1 className="text-3xl text-neutral-100">
-								Addresses
-							</h1>
+							<h1 className="text-3xl text-neutral-100">Addresses</h1>
 						</div>
 						<div className="w-full h-max p-5">
-							<button className="w-max px-3 py-2 bg-neutral-600 text-neutral-100 rounded-md text-center hover:bg-neutral-100 hover:text-black transition-all duration-100" onClick={handleAddAddress}>
+							<button
+								className="w-max px-3 py-2 bg-neutral-600 text-neutral-100 rounded-md text-center hover:bg-neutral-100 hover:text-black transition-all duration-100"
+								onClick={handleAddAddress}
+							>
 								Add Address
 							</button>
 						</div>
@@ -121,10 +112,11 @@ export default function Profile() {
 								<div className="w-full h-max text-neutral-100 font-light text-left">
 									No Addresses Found
 								</div>
-							) : null}
-							{addresses.map((address, index) => (
-								<AddressCard key={index} {...address} />
-							))}
+							) : (
+								addresses.map((address, index) => (
+									<AddressCard key={index} {...address} />
+								))
+							)}
 						</div>
 					</div>
 				</div>

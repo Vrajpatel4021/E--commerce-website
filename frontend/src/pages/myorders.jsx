@@ -1,31 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import Nav from '../components/auth/nav';
 import { FaBox, FaShippingFast, FaTimesCircle } from 'react-icons/fa';
-
-import { useSelector } from 'react-redux'; // Import useSelector
-
-
-
+import { useSelector } from 'react-redux';
 
 const MyOrdersPage = () => {
     const [orders, setOrders] = useState([]);
-    // Retrieve email from Redux state
     const defaultEmail = useSelector((state) => state.user.email);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const fetchOrders = async () => {
-        if (!defaultEmail) return;
+        if (!defaultEmail) return; // ✅ Don't call API if email is missing
         try {
             setLoading(true);
             setError('');
             const response = await axios.get('http://localhost:8000/api/v2/orders/myorders', {
                 params: { email: defaultEmail },
             });
-            setOrders(response.data.orders);
+            setOrders(response.data.orders || []);
         } catch (err) {
+            console.error('Error fetching orders:', err);
             setError(err.response?.data?.message || 'Error fetching orders');
         } finally {
             setLoading(false);
@@ -35,21 +31,21 @@ const MyOrdersPage = () => {
     const cancelOrder = async (orderId) => {
         try {
             const response = await axios.patch(`http://localhost:8000/api/v2/orders/cancel-order/${orderId}`);
+            const updatedStatus = response.data.order.status;
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>
-                    order._id === orderId ? { ...order, status: response.data.order.status } : order
+                    order._id === orderId ? { ...order, orderStatus: updatedStatus } : order
                 )
             );
-            fetchOrders();
         } catch (err) {
-            console.error(err);
+            console.error('Error cancelling order:', err);
             alert(err.response?.data?.message || 'Error cancelling order');
         }
     };
 
     useEffect(() => {
         fetchOrders();
-    }, []);
+    }, [defaultEmail]); // ✅ Watch when email is available!
 
     return (
         <>
