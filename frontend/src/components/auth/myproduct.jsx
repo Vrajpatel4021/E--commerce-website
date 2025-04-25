@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import axios from "../../axiosConfig"; // ✅ Use configured Axios instance
+import axios from "../../axiosConfig";
 
-function Myproduct({ _id, name, images, description, price }) {
+function Myproduct({ _id, name, images, description, price, onDelete }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const navigate = useNavigate();
 
@@ -15,7 +15,9 @@ function Myproduct({ _id, name, images, description, price }) {
         return () => clearInterval(interval);
     }, [images]);
 
-    const currentImage = images && images.length > 0 ? images[currentIndex] : null;
+    const currentImage = Array.isArray(images) && images.length > 0
+        ? images[currentIndex]
+        : null;
 
     const handleEdit = () => {
         navigate(`/create-product/${_id}`);
@@ -26,7 +28,7 @@ function Myproduct({ _id, name, images, description, price }) {
             const response = await axios.delete(`/api/v2/product/delete-product/${_id}`);
             if (response.status === 200) {
                 alert("Product deleted successfully!");
-                window.location.reload();
+                onDelete(_id); // ✅ call parent handler to update state
             }
         } catch (err) {
             console.error("Error deleting product:", err);
@@ -72,6 +74,7 @@ Myproduct.propTypes = {
     images: PropTypes.arrayOf(PropTypes.string).isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    onDelete: PropTypes.func.isRequired, // ✅ required prop
 };
 
 export default Myproduct;
