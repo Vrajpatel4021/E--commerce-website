@@ -13,7 +13,7 @@ export default function MyProducts() {
   //mail which is present in mongodb
   useEffect(() => {
     if (!email) return alert("error in display");
-    axios.get(`http://localhost:8000/api/v2/product/my-products?email=${email}`)
+    axios.get(`/api/v2/product/my-products?email=${email}`)
         .then((res) => {
             setProducts(res.data.products); // <-- res.data, not res.json()
             setLoading(false);

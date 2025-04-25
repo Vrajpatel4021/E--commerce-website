@@ -16,7 +16,7 @@ const MyOrdersPage = () => {
         try {
             setLoading(true);
             setError('');
-            const response = await axios.get('http://localhost:8000/api/v2/orders/myorders', {
+            const response = await axios.get('/api/v2/orders/myorders', {
                 params: { email: defaultEmail },
             });
             setOrders(response.data.orders || []);
@@ -30,7 +30,7 @@ const MyOrdersPage = () => {
 
     const cancelOrder = async (orderId) => {
         try {
-            const response = await axios.patch(`http://localhost:8000/api/v2/orders/cancel-order/${orderId}`);
+            const response = await axios.patch(`/api/v2/orders/cancel-order/${orderId}`);
             const updatedStatus = response.data.order.status;
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>

@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
-import axios from "axios";
+import axios from "../../axiosConfig";
 import ValidationFormObject from "../../validation";
 
 const Signup = () => {
@@ -60,7 +60,7 @@ const Signup = () => {
 
 
 //axios request
-    axios.post("http://localhost:8000/api/v2/user/create-user", newForm, config).then((res)=>{
+    axios.post("/api/v2/user/create-user", newForm, config).then((res)=>{
       console.log(res.data);
     }).catch((err)=>{
       console.log(err);

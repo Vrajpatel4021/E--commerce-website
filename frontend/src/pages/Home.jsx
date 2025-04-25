@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v2/product/get-products")
+      .get("/api/v2/product/get-products")
       .then((res) => {
         setProducts(res.data.products);
         setLoading(false);
