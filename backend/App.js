@@ -16,7 +16,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'https://ecommerce-vrajpatel-s73.netlify.app'
 ];
-
+const cors = require('cors')
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
