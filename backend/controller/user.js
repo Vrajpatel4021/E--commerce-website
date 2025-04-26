@@ -73,13 +73,13 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
             { expiresIn: "1h" }
         );
     
-        // Set token in an HttpOnly cookie
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // use true in production
-            sameSite: "Strict",
-            maxAge: 3600000, // 1 hour
-        });
+        // // Set token in an HttpOnly cookie
+        // res.cookie("token", token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === "production", // use true in production
+        //     sameSite: "Strict",
+        //     maxAge: 3600000, // 1 hour
+        // });
 
     user.password = undefined;
     res.status(200).json({
