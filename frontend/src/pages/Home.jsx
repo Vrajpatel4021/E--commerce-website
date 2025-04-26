@@ -9,18 +9,25 @@ export default function Home() {
   const [error, setError] = useState(null); // For error handling
 
   useEffect(() => {
-    axios
-      .get("/api/v2/product/get-products")
-      .then((res) => {
-        setProducts(res.data.products);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("❌ Error fetching products:", err);
-        setError(err.message);
-        setLoading(false);
-      });
+    const fetchProducts = () => {
+      axios
+        .get("/api/v2/product/get-products")
+        .then((res) => {
+          setProducts(res.data.products);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("❌ Error fetching products:", err);
+          setError(err.message);
+          setLoading(false);
+        });
+    };
+  
+    const timeout = setTimeout(fetchProducts, 500); // ⏱ 0.5s delay
+  
+    return () => clearTimeout(timeout); // Cleanup on unmount
   }, []);
+  
 
   if (loading) {
     return <div className="text-center text-white mt-10">Loading products...</div>;
