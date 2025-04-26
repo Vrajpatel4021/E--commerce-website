@@ -84,6 +84,7 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
     user.password = undefined;
     res.status(200).json({
         success: true,
+        token,
         user,
     });
 }));
