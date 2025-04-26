@@ -16,6 +16,8 @@ const Login = () => {
     try {
       const response = await axios.post("/api/v2/user/login", { email, password });
 
+      localStorage.setItem("token", response.data.token);
+
       dispatch(setemail(email));
       console.log("Login successful:", response.data);
       navigate("/");
