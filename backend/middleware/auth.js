@@ -1,35 +1,30 @@
-// backend/middleware/auth.js
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
 const ErrorHandler = require('../utils/errorhandler');
 const catchAsyncErrors = require('./catchAsyncErrors');
 
 const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
-    const token = req.cookies.token;
-    console.log("Token from cookies:", token);
+  const authHeader = req.headers.authorization;
 
-    if (!token) {
-        return next(new ErrorHandler("Please login to access this resource", 401));
-    }
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return next(new ErrorHandler("Please login to access this resource", 401));
+  }
 
-    let decodedData;
-    try {
-        // Verify token using your JWT secret
-        decodedData = jwt.verify(token, "randomtoken1234567890");
-        console.log("Decoded data:", decodedData);
-    } catch (err) {
-        // If this block executes, jwt.verify() threw an error
-        console.error("JWT verification error:", err.name, err.message);
-        return next(new ErrorHandler("Invalid or expired token", 401));
-    }
+  const token = authHeader.split(" ")[1];
 
-    // Now attach user details to request
+  try {
+    const decodedData = jwt.verify(token, "randomtoken1234567890");
     req.user = await User.findById(decodedData.id);
+
     if (!req.user) {
-        return next(new ErrorHandler("User not found", 404));
+      return next(new ErrorHandler("User not found", 404));
     }
 
     next();
+  } catch (err) {
+    console.error("JWT verification error:", err.name, err.message);
+    return next(new ErrorHandler("Invalid or expired token", 401));
+  }
 });
 
 module.exports = { isAuthenticatedUser };
